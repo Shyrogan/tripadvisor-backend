@@ -18,6 +18,7 @@ subprojects {
 
         implementation(rootProject.libs.jackson.databind)
 
+        implementation(rootProject.libs.postgre.driver)
         implementation(rootProject.libs.jdbi)
     }
 

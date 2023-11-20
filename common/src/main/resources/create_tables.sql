@@ -57,14 +57,14 @@ CREATE INDEX IF NOT EXISTS idx_res_fin ON reservation (fin);
 
 CREATE TABLE IF NOT EXISTS agence
 (
-    id       UUID PRIMARY KEY,
+    id_agence       UUID PRIMARY KEY,
     nom      VARCHAR(64) NOT NULL,
     password VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS partenariat
 (
-    agence UUID REFERENCES agence (id),
+    agence UUID REFERENCES agence (id_agence),
     hotel  UUID REFERENCES hotel (id_hotel),
     taux   REAL NOT NULL,
     PRIMARY KEY (agence, hotel)
