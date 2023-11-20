@@ -20,8 +20,8 @@ subprojects {
         implementation(rootProject.libs.slf4j)
         implementation(rootProject.libs.javalin.core)
 
-        implementation(libs.javalin.oapi.plugin)
-        implementation(libs.javalin.oapi.swagger)
-        annotationProcessor(libs.javalin.oapi.annotation.processor)
+        implementation(rootProject.libs.javalin.oapi.plugin)
+        implementation(rootProject.libs.javalin.oapi.swagger)
+        annotationProcessor(rootProject.libs.javalin.oapi.annotation.processor)
     }
 }
