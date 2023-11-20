@@ -1,9 +1,11 @@
 [libraries]
 javalin-core = { group = "io.javalin", name = "javalin", version.ref="javalin" }
 slf4j = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
-lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
+jdbi = { group = "org.jdbi", name = "jdbi3-postgres", version.ref = "jdbi" }
 
 [versions]
 javalin = "5.6.3"
 slf4j = "2.0.9"
-lombok = "1.18.30"
+jackson = "2.14.2"
+jdbi = "3.41.3"

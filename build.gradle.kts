@@ -12,13 +12,16 @@ subprojects {
 
     dependencies {
         val implementation by configurations
-        val compileOnly by configurations
-        val annotationProcessor by configurations
-
-        compileOnly(rootProject.libs.lombok)
-        annotationProcessor(rootProject.libs.lombok)
 
         implementation(rootProject.libs.slf4j)
         implementation(rootProject.libs.javalin.core)
+
+        implementation(rootProject.libs.jackson.databind)
+
+        implementation(rootProject.libs.jdbi)
+    }
+
+    tasks.withType<JavaCompile> {
+        options.compilerArgs.add("-parameters")
     }
 }
