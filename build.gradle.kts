@@ -16,12 +16,9 @@ subprojects {
         val annotationProcessor by configurations
 
         compileOnly(rootProject.libs.lombok)
+        annotationProcessor(rootProject.libs.lombok)
 
         implementation(rootProject.libs.slf4j)
         implementation(rootProject.libs.javalin.core)
-
-        implementation(rootProject.libs.javalin.oapi.plugin)
-        implementation(rootProject.libs.javalin.oapi.swagger)
-        annotationProcessor(rootProject.libs.javalin.oapi.annotation.processor)
     }
 }

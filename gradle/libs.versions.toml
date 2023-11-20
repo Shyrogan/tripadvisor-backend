@@ -1,13 +1,9 @@
 [libraries]
 javalin-core = { group = "io.javalin", name = "javalin", version.ref="javalin" }
-javalin-oapi-annotation-processor = { group = "io.javalin.community.openapi", name = "openapi-annotation-processor", version.ref="javalin-oapi" }
-javalin-oapi-plugin = { group = "io.javalin.community.openapi", name = "javalin-openapi-plugin", version.ref="javalin-oapi" }
-javalin-oapi-swagger = { group = "io.javalin.community.openapi", name = "javalin-swagger-plugin", version.ref="javalin-oapi" }
 slf4j = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 
 [versions]
 javalin = "5.6.3"
-javalin-oapi = "5.6.3-2"
 slf4j = "2.0.9"
 lombok = "1.18.30"
