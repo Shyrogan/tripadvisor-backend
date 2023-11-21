@@ -3,6 +3,7 @@ package fr.samyseb.hotel;
 import fr.samyseb.common.JavalinConfigs;
 import fr.samyseb.common.pojo.Hotel;
 import fr.samyseb.hotel.controller.ChambreController;
+import fr.samyseb.hotel.controller.ClientController;
 import fr.samyseb.hotel.controller.HotelController;
 import fr.samyseb.hotel.controller.ReservationController;
 import io.javalin.Javalin;
@@ -48,11 +49,18 @@ public class Application {
                 .put("/chambre", ChambreController::createChambre)
                 .patch("/chambre", ChambreController::updateChambre)
                 .delete("/chambre", ChambreController::deleteChambre)
+
                 .get("/reservation", ReservationController::listReservations)
                 .get("/reservation/{numeroChambre}", ReservationController::listChambreReservations)
                 .put("/reservation", ReservationController::createReservation)
-                .patch("/reservation",ReservationController::updateReservation)
-                .delete("/reservation",ReservationController::deleteReservation)
+                .patch("/reservation", ReservationController::updateReservation)
+                .delete("/reservation", ReservationController::deleteReservation)
+
+                .get("/client", ClientController::listClients)
+                .put("/client", ClientController::createClient)
+                .patch("/client", ClientController::updateClient)
+                .delete("/client", ClientController::deleteClient)
+
                 .start(port);
 
 
