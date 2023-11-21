@@ -42,19 +42,22 @@ public class Application {
     }
 
     public void start(int port) {
-        Javalin.create(JavalinConfigs::commonConfiguration)
+        Javalin app = Javalin.create(JavalinConfigs::commonConfiguration)
                 .get("/", HotelController::getHotel)
-
                 .get("/chambre", ChambreController::listChambre)
                 .put("/chambre", ChambreController::createChambre)
                 .patch("/chambre", ChambreController::updateChambre)
                 .delete("/chambre", ChambreController::deleteChambre)
-
                 .get("/reservation", ReservationController::listReservations)
-                .get("/reservation/{id}", ReservationController::listChambreReservations)
-
+                .get("/reservation/{numeroChambre}", ReservationController::listChambreReservations)
+                .put("/reservation", ReservationController::createReservation)
+                .patch("/reservation",ReservationController::updateReservation)
+                .delete("/reservation",ReservationController::deleteReservation)
                 .start(port);
+
+
     }
+
 
     private void insertHotel(Jdbi jdbi) {
         jdbi.open()

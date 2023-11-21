@@ -11,8 +11,8 @@ public record Reservation(
         UUID id,
         @ColumnName("id_hotel")
         UUID hotel,
-        @ColumnName("id_chambre")
-        UUID chambre,
+        @ColumnName("numero_chambre")
+        int numeroChambre,
         @Nested
         Client client,
         LocalDate debut,
