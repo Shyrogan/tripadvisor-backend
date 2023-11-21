@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS hotel
 
 CREATE TABLE IF NOT EXISTS chambre
 (
-    id     UUID PRIMARY KEY,
-    hotel  UUID REFERENCES hotel (id_hotel) NOT NULL,
+    id_chambre     UUID PRIMARY KEY,
+    id_hotel  UUID REFERENCES hotel (id_hotel) NOT NULL,
     places SMALLSERIAL CHECK (places > 1)   NOT NULL,
     prix   REAL                             NOT NULL
 );
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS client
 CREATE TABLE IF NOT EXISTS reservation
 (
     hotel   UUID REFERENCES hotel (id_hotel),
-    chambre UUID REFERENCES chambre (id),
+    chambre UUID REFERENCES chambre (id_chambre),
     debut   DATE NOT NULL,
     fin     DATE NOT NULL,
     PRIMARY KEY (hotel, chambre)
