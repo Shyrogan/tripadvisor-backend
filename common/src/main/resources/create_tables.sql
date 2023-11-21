@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS hotel
 
 CREATE TABLE IF NOT EXISTS chambre
 (
-    id_chambre     UUID PRIMARY KEY,
-    id_hotel  UUID REFERENCES hotel (id_hotel) NOT NULL,
-    places SMALLSERIAL CHECK (places > 1)   NOT NULL,
-    prix   REAL                             NOT NULL
+    id_chambre UUID PRIMARY KEY,
+    id_hotel   UUID REFERENCES hotel (id_hotel) ON DELETE CASCADE NOT NULL,
+    places     SMALLSERIAL CHECK (places > 1)                     NOT NULL,
+    prix       REAL                                               NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_chambre_place ON chambre (places);
 CREATE INDEX IF NOT EXISTS idx_chambre_prix ON chambre (prix);
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS agence
 
 CREATE TABLE IF NOT EXISTS partenariat
 (
-    id_agence UUID REFERENCES agence (id_agence),
-    id_hotel  UUID REFERENCES hotel (id_hotel),
-    taux   REAL NOT NULL,
+    id_agence UUID REFERENCES agence (id_agence) ON DELETE CASCADE,
+    id_hotel  UUID REFERENCES hotel (id_hotel) ON DELETE CASCADE,
+    taux      REAL NOT NULL,
     PRIMARY KEY (id_agence, id_hotel)
 );
