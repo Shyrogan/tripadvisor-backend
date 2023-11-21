@@ -27,6 +27,7 @@ public class Application {
 
         this.jdbi = jdbiPostgre("localhost", "rest", "sebastien", "");
         this.hotel = hotel;
+        this.insertHotel(jdbi);
     }
 
     public static Application application() {
@@ -49,6 +50,16 @@ public class Application {
                 .patch("/chambre", ChambreController::updateChambre)
                 .delete("/chambre", ChambreController::deleteChambre)
                 .start(port);
+    }
+
+    private void insertHotel(Jdbi jdbi) {
+        jdbi.open()
+                .execute("INSERT INTO adresse VALUES (?, ?, ?, ?, ?)",
+                        hotel.adresse().id(), hotel.adresse().numero(), hotel.adresse().rue(),
+                        hotel.adresse().ville(), hotel.adresse().pays());
+        jdbi.open()
+                .execute("INSERT INTO hotel VALUES (?, ?, ?, ?, ?)",
+                        hotel.id(), hotel.adresse().id(), hotel.nom(), hotel.etoiles(), hotel.url());
     }
 
 }

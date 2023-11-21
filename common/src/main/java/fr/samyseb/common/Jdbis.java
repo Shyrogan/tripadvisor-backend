@@ -1,6 +1,7 @@
 package fr.samyseb.common;
 
 import fr.samyseb.common.pojo.Adresse;
+import fr.samyseb.common.pojo.Chambre;
 import fr.samyseb.common.pojo.Hotel;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.ColumnMappers;
@@ -13,7 +14,8 @@ public class Jdbis {
         return Jdbi.create("jdbc:postgresql://" + ip + "/" + database, username, password)
                 .installPlugin(new PostgresPlugin())
                 .registerRowMapper(Hotel.class, ConstructorMapper.of(Hotel.class))
-                .registerRowMapper(Adresse.class, ConstructorMapper.of(Adresse.class));
+                .registerRowMapper(Adresse.class, ConstructorMapper.of(Adresse.class))
+                .registerRowMapper(Chambre.class, ConstructorMapper.of(Chambre.class));
     }
 
 }
