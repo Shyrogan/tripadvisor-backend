@@ -47,13 +47,16 @@ CREATE TABLE IF NOT EXISTS client
 
 CREATE TABLE IF NOT EXISTS reservation
 (
-    hotel     UUID REFERENCES hotel (id_hotel) ON DELETE CASCADE,
-    chambre   UUID REFERENCES chambre (id_chambre) ON DELETE CASCADE,
-    id_client UUID REFERENCES client (id_client) ON DELETE CASCADE,
-    debut     DATE NOT NULL,
-    fin       DATE NOT NULL,
-    PRIMARY KEY (hotel, chambre)
+    id_reservation UUID PRIMARY KEY,
+    id_hotel       UUID REFERENCES hotel (id_hotel) ON DELETE CASCADE,
+    id_chambre     UUID REFERENCES chambre (id_chambre) ON DELETE CASCADE,
+    id_client      UUID REFERENCES client (id_client) ON DELETE CASCADE,
+    debut          DATE NOT NULL,
+    fin            DATE NOT NULL
 );
+CREATE INDEX IF NOT EXISTS idx_res_hotel ON reservation (id_chambre);
+CREATE INDEX IF NOT EXISTS idx_res_chambre ON reservation (id_hotel);
+CREATE INDEX IF NOT EXISTS idx_res_client ON reservation (id_client);
 CREATE INDEX IF NOT EXISTS idx_res_debut ON reservation (debut);
 CREATE INDEX IF NOT EXISTS idx_res_fin ON reservation (fin);
 
