@@ -23,12 +23,12 @@ public class ChambreController {
         var ch = ctx.bodyValidator(Chambre.class)
                 .check(c -> c.hotel() == null, "Il n'est pas possible de définir l'ID de l'hôtel à la création")
                 .check(c -> c.numeroChambre() > 0, "Un numéro de chambre valide est requis")
-                .check(c -> c.places() >= 1 && c.places() <= 20, "Le nombre de place doit-être compris entre 1..20")
+                .check(c -> c.places() >= 1 && c.places() <= 20, "Le nombre de place doit-être compris entre 1 et20")
                 .check(c -> c.prix() >= 0, "Le prix doit-être une valeur positive")
                 .get();
         application().jdbi().open()
                 .execute("INSERT INTO chambre VALUES (?, ?, ?, ?)",
-                         application().hotel().id(), ch.numeroChambre(),  ch.places(), ch.prix());
+                        application().hotel().id(), ch.numeroChambre(), ch.places(), ch.prix());
         var response = Map.of(
                 "id_hotel", application().hotel().id(),
                 "numero_chambre", ch.numeroChambre()
