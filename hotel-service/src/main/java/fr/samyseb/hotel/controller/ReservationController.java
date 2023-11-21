@@ -51,6 +51,17 @@ public class ReservationController {
                         .mapTo(Chambre.class)
                         .findFirst()
                         .isPresent(), "Le numéro de la chambre indiqué n'existe pas")
+                .check(r -> {
+                    var chevauchement = application().jdbi().open()
+                            .createQuery("SELECT COUNT(*) FROM reservation WHERE numero_chambre = :num AND id_hotel = :hotel AND (debut < :nouvelleFin AND fin > :nouveauDebut)")
+                            .bind("num", r.numeroChambre())
+                            .bind("hotel", application().hotel().id())
+                            .bind("nouveauDebut", r.debut())
+                            .bind("nouvelleFin", r.fin())
+                            .mapTo(Long.class)
+                            .one();
+                    return chevauchement == 0;
+                }, "Les dates de réservation sont en conflit avec une autre réservation existante.")
                 .get();
 
         UUID id = UUID.randomUUID();
@@ -59,15 +70,9 @@ public class ReservationController {
                 .execute("INSERT INTO reservation (id_reservation, id_hotel, numero_chambre, id_client, debut, fin) VALUES (?, ?, ?, ?, ?, ?)",
                         id, application().hotel().id(), reservation.numeroChambre(), reservation.client().id(), reservation.debut(), reservation.fin());
 
-        // Construction de la réponse JSON
-        var response = Map.of(
-                "id_reservation", id,
-                "debut", reservation.debut().toString(),
-                "fin", reservation.fin().toString()
-        );
-
-        ctx.json(response).status(HttpStatus.CREATED);
+        ctx.json(id).status(HttpStatus.CREATED);
     }
+
 
     public static void updateReservation(Context ctx) {
         var reservation = ctx.bodyValidator(Reservation.class)
