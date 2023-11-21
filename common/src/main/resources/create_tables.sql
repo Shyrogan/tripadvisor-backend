@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS hotel
     id_hotel UUID PRIMARY KEY,
     adresse  UUID REFERENCES adresse (id_adresse)              NOT NULL,
     nom      VARCHAR(64)                                       NOT NULL,
+    url      VARCHAR(128)                                      NOT NULL,
     etoiles  SMALLSERIAL CHECK (etoiles >= 1 AND etoiles <= 5) NOT NULL
 );
 
@@ -57,9 +58,10 @@ CREATE INDEX IF NOT EXISTS idx_res_fin ON reservation (fin);
 
 CREATE TABLE IF NOT EXISTS agence
 (
-    id_agence       UUID PRIMARY KEY,
-    nom      VARCHAR(64) NOT NULL,
-    password VARCHAR(64) NOT NULL
+    id_agence UUID PRIMARY KEY,
+    nom       VARCHAR(64)  NOT NULL,
+    password  VARCHAR(64)  NOT NULL,
+    url       VARCHAR(128) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS partenariat
