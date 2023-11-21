@@ -1,7 +1,6 @@
 package fr.samyseb.hotel.controller;
 
 import fr.samyseb.common.pojo.Chambre;
-import fr.samyseb.hotel.Application;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 
@@ -14,7 +13,7 @@ public class ChambreController {
     public static void listChambre(Context ctx) {
         ctx.json(application().jdbi().open()
                 .createQuery("SELECT * FROM chambre WHERE id_hotel = :id")
-                        .bind("id", application().hotel().id())
+                .bind("id", application().hotel().id())
                 .mapTo(Chambre.class)
                 .list());
     }
@@ -26,27 +25,29 @@ public class ChambreController {
                 .check(c -> c.places() >= 1 && c.places() <= 20, "Le nombre de place doit-être compris entre 1..20")
                 .check(c -> c.prix() >= 0, "Le prix doit-être une valeur positive")
                 .get();
+        var id = UUID.randomUUID();
         application().jdbi().open()
-                        .execute("INSERT INTO chambre VALUES (?, ?, ?, ?)",
-                                UUID.randomUUID(), application().hotel().id(), ch.places(), ch.prix());
-        ctx.status(HttpStatus.CREATED);
+                .execute("INSERT INTO chambre VALUES (?, ?, ?, ?)",
+                        id, application().hotel().id(), ch.places(), ch.prix());
+        ctx.json(id).status(HttpStatus.CREATED);
     }
 
     public static void updateChambre(Context ctx) {
         var ch = ctx.bodyValidator(Chambre.class)
                 .check(c -> c.id() != null && application().jdbi().open()
-                        .createQuery("SELECT * FROM chambre WHERE id_chambre = ?")
-                        .bind(1, c.id())
+                        .createQuery("SELECT * FROM chambre WHERE id_chambre = :id AND id_hotel = :hotel")
+                        .bind("id", c.id())
+                        .bind("hotel", application().hotel().id())
                         .mapTo(Chambre.class)
                         .findFirst()
-                        .isEmpty(), "L'ID de la chambre indiqué n'existe pas")
+                        .isPresent(), "L'ID de la chambre indiqué n'existe pas")
                 .check(c -> c.hotel() == null, "Il n'est pas possible de définir l'ID de l'hôtel à la modification")
                 .check(c -> c.places() >= 1 && c.places() <= 20, "Le nombre de place doit-être compris entre 1..20")
                 .check(c -> c.prix() >= 0, "Le prix doit-être une valeur positive")
                 .get();
         application().jdbi().open()
                 .execute("UPDATE chambre SET places = ?, prix = ? WHERE id_chambre = ?",
-                        ch.prix(), ch.places(), ch.id());
+                        ch.places(), ch.prix(), ch.id());
 
         ctx.status(HttpStatus.OK);
     }
@@ -54,11 +55,12 @@ public class ChambreController {
     public static void deleteChambre(Context ctx) {
         var id = ctx.bodyValidator(UUID.class)
                 .check(uid -> uid != null && application().jdbi().open()
-                        .createQuery("SELECT * FROM chambre WHERE id_chambre = ?")
-                        .bind(1, uid)
+                        .createQuery("SELECT * FROM chambre WHERE id_chambre = :id AND id_hotel = :hotel")
+                        .bind("id", uid)
+                        .bind("hotel", application().hotel().id())
                         .mapTo(Chambre.class)
                         .findFirst()
-                        .isEmpty(), "L'ID de la chambre indiqué n'existe pas")
+                        .isPresent(), "L'ID de la chambre indiqué n'existe pas")
                 .get();
         application().jdbi().open()
                 .execute("DELETE FROM chambre WHERE id_chambre = ?", id);
