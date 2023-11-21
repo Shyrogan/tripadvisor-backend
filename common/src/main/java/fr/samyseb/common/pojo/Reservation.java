@@ -1,5 +1,6 @@
 package fr.samyseb.common.pojo;
 
+import org.jdbi.v3.core.mapper.Nested;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 import java.time.LocalDate;
@@ -12,8 +13,8 @@ public record Reservation(
         UUID hotel,
         @ColumnName("id_chambre")
         UUID chambre,
-        @ColumnName("id_client")
-        UUID client,
+        @Nested
+        Client client,
         LocalDate debut,
         LocalDate fin
 ) {
