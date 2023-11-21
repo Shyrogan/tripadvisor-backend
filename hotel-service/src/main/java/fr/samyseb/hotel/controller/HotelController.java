@@ -1,18 +1,13 @@
 package fr.samyseb.hotel.controller;
 
-import fr.samyseb.common.pojo.Hotel;
-import io.javalin.http.Handler;
+import io.javalin.http.Context;
+
+import static fr.samyseb.hotel.Application.application;
 
 public class HotelController {
 
-    private Hotel hotel;
-
-    public HotelController(Hotel hotel) {
-        this.hotel = hotel;
+    public static void getHotel(Context ctx) {
+        ctx.json(application().hotel());
     }
-
-    public final Handler getHotel = ctx -> {
-        ctx.json(hotel);
-    };
 
 }

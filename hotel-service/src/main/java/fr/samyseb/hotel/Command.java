@@ -24,8 +24,13 @@ public class Command implements Callable<Integer> {
     private String pays;
 
     @Override
-    public Integer call() throws Exception {
-        new Application(new Hotel(UUID.randomUUID(), nom, new Adresse(UUID.randomUUID(), numero, rue, ville, pays), etoiles)).start(3000);
+    public Integer call() {
+        new Application(new Hotel(
+                UUID.randomUUID(), nom, etoiles,
+                new Adresse(UUID.randomUUID(), numero, rue, ville, pays),
+                "http://%s:%d".formatted("127.0.0.1", 3000))
+        ).start(3000);
+
         return 0;
     }
 }
