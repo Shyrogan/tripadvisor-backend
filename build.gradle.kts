@@ -1,5 +1,5 @@
 allprojects {
-    group   = "fr.samyseb"
+    group = "fr.samyseb"
     version = "0.1.0"
 }
 
@@ -23,6 +23,7 @@ subprojects {
     }
 
     tasks.withType<JavaCompile> {
-        options.compilerArgs.add("-parameters")
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
 }

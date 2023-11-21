@@ -4,7 +4,6 @@ import fr.samyseb.common.pojo.Adresse;
 import fr.samyseb.common.pojo.Chambre;
 import fr.samyseb.common.pojo.Hotel;
 import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.core.mapper.ColumnMappers;
 import org.jdbi.v3.core.mapper.reflect.ConstructorMapper;
 import org.jdbi.v3.postgres.PostgresPlugin;
 
