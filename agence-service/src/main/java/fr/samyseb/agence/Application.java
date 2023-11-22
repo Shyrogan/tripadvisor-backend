@@ -15,10 +15,10 @@ public class Application {
     private final Jdbi jdbi;
     private final Agence agence;
 
-    Application(Agence agence, String dbUrl, String dbUser, String dbPassword) {
+    Application(Agence agence, String jdbcUrl, String pgUser, String pgPassword) {
         application = this;
 
-        this.jdbi = jdbiPostgre(dbUrl, dbUser, dbPassword);
+        this.jdbi = jdbiPostgre(jdbcUrl, pgUser, pgPassword);
         this.agence = agence;
         this.insertAgence(jdbi);
     }
