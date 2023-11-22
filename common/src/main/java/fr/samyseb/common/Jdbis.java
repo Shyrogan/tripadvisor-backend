@@ -15,7 +15,8 @@ public class Jdbis {
                 .registerRowMapper(Chambre.class, ConstructorMapper.of(Chambre.class))
                 .registerRowMapper(CarteBancaire.class, ConstructorMapper.of(CarteBancaire.class))
                 .registerRowMapper(Client.class, ConstructorMapper.of(Client.class))
-                .registerRowMapper(Reservation.class, ConstructorMapper.of(Reservation.class));
+                .registerRowMapper(Reservation.class, ConstructorMapper.of(Reservation.class))
+                .registerRowMapper(Reservation.class, ConstructorMapper.of(Agence.class));
     }
 
 }
